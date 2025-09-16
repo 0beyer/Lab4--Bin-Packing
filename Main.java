@@ -2,14 +2,13 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        int[] array = { 12, 4, 8, 15, 9, 3, 1, 10 };
+        int[] array = {6, 5, 9, 11, 15, 14};
         printArray(array);
         int binSize = sizeInput();
         binPackApprox(array, binSize);
     }
 
     public static void binPackApprox(int[] array, int binSize) {
-
         Arrays.sort(array);
         ArrayList<Integer> arr = fillArray(array);
         ArrayList<Integer> trashBin = new ArrayList<Integer>();
@@ -25,23 +24,29 @@ public class Main {
 
         for (int i = 0; i < binArrayList.size() - 1; i++) {
             Integer temp = arr.get(arrSizeMin1(arr));
-            elementTransfer(arrSizeMin1(arr), arr, binArrayList, i);
-            int k = 0;
+            elementTransfer(arrSizeMin1(arr), arr, binArrayList, i);    
 
             // Checks if the sum of the last two arrays fit in the bin, 
             // then adds them to the bin
-
             while ((temp + arr.get(arrSizeMin1(arr))) < binSize) {
-                temp += temp + arr.get(arrSizeMin1(arr));
+                temp += arr.get(arrSizeMin1(arr));
                 elementTransfer(arrSizeMin1(arr), arr, binArrayList, i);
             }
 
             // Checks if the first and last elements of the array fit in the bin 
             // and then adds them
-
-            while ((temp + arr.get(k)) < binSize) {
-                temp += arr.get(k);
-                elementTransfer(k, arr, binArrayList, i);
+            
+            while (!(arr.isEmpty())) {
+                if((temp + arr.get(0)) <= (binSize))
+                {
+                    temp += arr.get(0);
+                    elementTransfer(0, arr, binArrayList, i);
+                }
+                else
+                {
+                    break;
+                }
+                
             }
         }
 
